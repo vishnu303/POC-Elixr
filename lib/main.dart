@@ -1,3 +1,4 @@
+import 'package:elixr_poc/screens/sign_up_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,8 +11,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(useMaterial3: false),
       title: 'Poc',
-      home: const Scaffold(),
+      home: const SignUpPage(),
     );
   }
 }
