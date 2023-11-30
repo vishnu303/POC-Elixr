@@ -1,3 +1,4 @@
+import 'package:elixr_poc/screens/sign_in_page.dart';
 import 'package:flutter/material.dart';
 
 import 'package:elixr_poc/widgets/custom_elevated_button.dart';
@@ -159,7 +160,10 @@ class _SignUpPageState extends State<SignUpPage> {
                   const CustomText(
                       text: "Do you have an account ? ", fontSize: 14),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => const SignInPage()));
+                    },
                     child: const CustomText(
                       text: 'Sign In',
                       fontSize: 14,
