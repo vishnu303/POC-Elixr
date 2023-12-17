@@ -1,8 +1,13 @@
+import 'package:elixr_poc/app_redux/app_state.dart';
+import 'package:elixr_poc/authentication/redux/authentication_actions.dart';
+import 'package:elixr_poc/home/screens/home_page.dart';
 import 'package:flutter/material.dart';
-import 'package:elixr_poc/screens/sign_up_page.dart';
+import 'package:elixr_poc/authentication/screen/sign_up_page.dart';
 import 'package:elixr_poc/widgets/custom_elevated_button.dart';
 import 'package:elixr_poc/widgets/custom_text.dart';
 import 'package:elixr_poc/widgets/custom_textformfield.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -74,12 +79,39 @@ class _SignInPageState extends State<SignInPage> {
                   SizedBox(
                     height: sHeight * 0.04,
                   ),
-                  CustomElevatedButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'Sign In',
-                        style: TextStyle(fontSize: 16),
-                      )),
+                  StoreBuilder<AppState>(
+                    builder: (context, Store<AppState> store) {
+                      if (store.state.authState!.signInSuccess == true) {
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => const HomePage()));
+                          store.dispatch(MovedToNextPage());
+                        });
+                      }
+                      return CustomElevatedButton(
+                        onPressed: () {
+                          store.dispatch(
+                            SignInAction(
+                              email: _emailController.text,
+                              password: _passwordController.text,
+                            ),
+                          );
+                        },
+                        child: store.state.authState!.isFetching!
+                            ? const SizedBox(
+                                height: 25,
+                                width: 25,
+                                child: CircularProgressIndicator(
+                                    color: Colors.white),
+                              )
+                            : const Text(
+                                'Sign In',
+                                style: TextStyle(fontSize: 16),
+                              ),
+                      );
+                    },
+                  ),
                   SizedBox(
                     height: sHeight * 0.08,
                   ),
