@@ -1,9 +1,13 @@
-import 'package:elixr_poc/screens/sign_in_page.dart';
+import 'package:elixr_poc/app_redux/app_state.dart';
+import 'package:elixr_poc/authentication/model/user_model.dart';
+import 'package:elixr_poc/authentication/redux/authentication_actions.dart';
+import 'package:elixr_poc/authentication/screen/sign_in_page.dart';
 import 'package:flutter/material.dart';
-
 import 'package:elixr_poc/widgets/custom_elevated_button.dart';
 import 'package:elixr_poc/widgets/custom_text.dart';
 import 'package:elixr_poc/widgets/custom_textformfield.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -25,6 +29,7 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     var sHeight = MediaQuery.of(context).size.height;
     var sWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
@@ -62,7 +67,6 @@ class _SignUpPageState extends State<SignUpPage> {
                             },
                             controller: _firstNameController,
                             labelText: 'First name',
-                            obscureText: false,
                             textInputAction: TextInputAction.next,
                           ),
                         ),
@@ -76,7 +80,6 @@ class _SignUpPageState extends State<SignUpPage> {
                             },
                             controller: _lastNameController,
                             labelText: 'Last name',
-                            obscureText: false,
                             textInputAction: TextInputAction.next,
                           ),
                         ),
@@ -105,7 +108,6 @@ class _SignUpPageState extends State<SignUpPage> {
                       },
                       controller: _emailController,
                       labelText: 'Email',
-                      obscureText: false,
                       textInputAction: TextInputAction.next,
                     ),
                     CustomTextFormField(
@@ -145,12 +147,84 @@ class _SignUpPageState extends State<SignUpPage> {
               SizedBox(
                 height: sHeight * 0.04,
               ),
-              CustomElevatedButton(
-                  onPressed: () {},
-                  child: const Text(
-                    'Sign Up',
-                    style: TextStyle(fontSize: 16),
-                  )),
+              // StoreConnector<AppState, bool>(
+              //   converter: (store) =>
+              //       store.state.authState!.signUpSuccess ?? false,
+              //   builder: (context, signUpSuccess) {
+              //     // if (signUpSuccess) {
+              //     //   WidgetsBinding.instance.addPostFrameCallback((_) {
+              //     //     Navigator.of(context).push(MaterialPageRoute(
+              //     //       builder: (context) => const SignInPage(),
+              //     //     ));
+              //     //   });
+              //     // }
+              //     return CustomElevatedButton(
+              //       onPressed: () {
+              //         User user = User(
+              //           firstName: _firstNameController.text.trim(),
+              //           lastName: _lastNameController.text.trim(),
+              //           email: _emailController.text.trim(),
+              //           password: _passwordController.text.trim(),
+              //         );
+              //         store.dispatch(SignUpAction(user));
+              //       },
+              //       child: const Text(
+              //         'Sign Up',
+              //         style: TextStyle(fontSize: 16),
+              //       ),
+              //     );
+              //   },
+              // ),
+
+              StoreBuilder<AppState>(
+                builder: (context, Store<AppState> store) {
+                  if (store.state.authState!.signUpSuccess == true) {
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const SignInPage()));
+                      store.dispatch(MovedToNextPage());
+                    });
+                  }
+
+                  return CustomElevatedButton(
+                      onPressed: () {
+                        User user = User(
+                          firstName: _firstNameController.text.trim(),
+                          lastName: _lastNameController.text.trim(),
+                          //  empid: int.parse(_empIdController.text.trim()),
+                          email: _emailController.text.trim(),
+                          password: _passwordController.text.trim(),
+                        );
+                        store.dispatch(SignUpAction(user));
+                      },
+                      child: store.state.authState!.isFetching!
+                          ? const SizedBox(
+                              height: 25,
+                              width: 25,
+                              child: CircularProgressIndicator(
+                                  color: Colors.white),
+                            )
+                          : const Text(
+                              'Sign Up',
+                              style: TextStyle(fontSize: 16),
+                            ));
+                },
+              ),
+              // StoreConnector<AppState, bool>(
+              //   converter: (store) =>
+              //       store.state.authState!.signUpSuccess ?? false,
+              //   builder: (context, signUpSuccess) {
+              //     if (signUpSuccess) {
+              //       WidgetsBinding.instance.addPostFrameCallback((_) {
+              //         Navigator.of(context).push(MaterialPageRoute(
+              //           builder: (context) => const SignInPage(),
+              //         ));
+              //       });
+              //     }
+              //     return Container();
+              //   },
+              // ),
+
               SizedBox(
                 height: sHeight * 0.07,
               ),
