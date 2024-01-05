@@ -5,13 +5,15 @@ import 'package:elixr_poc/widgets/custom_snackbar.dart';
 
 AuthState authReducer(AuthState state, action) {
   if (action is SignUpAction) {
-    return state.copyWith(user: action.user, isFetching: true);
+    print('from sign up action');
+    return state.copyWith(isFetching: true);
   } else if (action is SignUpSuccessAction) {
     return state.copyWith(signUpSuccess: true, isFetching: false);
   } else if (action is MovedToNextPage) {
     return state.copyWith(
         signUpSuccess: false, isFetching: false, signInSuccess: false);
   } else if (action is SignUpFaliedAction) {
+    print('failed from reducer');
     SnackBarService.showSnackBar(content: action.errorMsg);
 
     return state.copyWith(
@@ -26,7 +28,7 @@ AuthState authReducer(AuthState state, action) {
         firstName: action.user.firstName,
         lastName: action.user.lastName,
         email: action.user.email,
-        password: 'password');
+        password: ' ');
     return state.copyWith(
       user: signInUser,
       signInSuccess: true,

@@ -13,23 +13,30 @@ class ActivityPage extends StatelessWidget {
     return Scaffold(
         body: StoreBuilder(builder: (context, Store<AppState> store) {
       List<LogModel> logData = store.state.logState!.logList!.reversed.toList();
-      return ListView.builder(
-          itemCount: logData.length,
-          itemBuilder: (context, index) {
-            return Card(
-                child: ListTile(
-              title: Padding(
-                padding: const EdgeInsets.all(20),
-                child: CustomText(
-                  textAlign: TextAlign.center,
-                  text:
-                      '${logData[index].firstname} ${logData[index].lastname} added task#${logData[index].issue} on ${logData[index].date}',
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+      return logData.isEmpty
+          ? const Center(
+              child: CustomText(
+                text: 'No data',
+                fontSize: 18,
               ),
-            ));
-          });
+            )
+          : ListView.builder(
+              itemCount: logData.length,
+              itemBuilder: (context, index) {
+                return Card(
+                    child: ListTile(
+                  title: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: CustomText(
+                      textAlign: TextAlign.center,
+                      text:
+                          '${logData[index].firstname} ${logData[index].lastname} added task#${logData[index].issue} on ${logData[index].date}',
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ));
+              });
     }));
   }
 }

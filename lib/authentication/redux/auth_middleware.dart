@@ -42,7 +42,6 @@ Middleware<AppState> signUpMiddleWare() {
               break;
           }
           store.dispatch(SignUpFaliedAction(errorMsg: errorMsg));
-          SnackBarService.showSnackBar(content: errorMsg);
         }
       } catch (e) {
         store.dispatch(SignUpFaliedAction(errorMsg: e.toString()));

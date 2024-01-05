@@ -1,6 +1,8 @@
 import 'package:elixr_poc/app_redux/app_state.dart';
+import 'package:elixr_poc/authentication/screen/sign_in_page.dart';
 import 'package:elixr_poc/home/redux/log_time_action.dart';
 import 'package:elixr_poc/home/widgets/log_time_bottomsheet.dart';
+import 'package:elixr_poc/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:elixr_poc/home/screens/activity_page.dart';
 import 'package:elixr_poc/home/screens/overview_page.dart';
@@ -32,6 +34,18 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           title: const Text('Home'),
           backgroundColor: Colors.brown[400],
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => SignInPage()));
+                },
+                child: CustomText(
+                  text: 'Logout',
+                  fontSize: 16,
+                  textColor: Colors.white,
+                ))
+          ],
           bottom: const TabBar(
             indicatorColor: Colors.white,
             tabs: [

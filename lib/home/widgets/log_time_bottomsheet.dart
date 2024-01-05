@@ -54,6 +54,7 @@ class _LogTimeBottomSheetState extends State<LogTimeBottomSheet> {
                   controller: _issueController,
                   labelText: 'Issue',
                   textInputAction: TextInputAction.next,
+                  keyboardType: TextInputType.number,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'field can\'t be empty';
@@ -104,6 +105,7 @@ class _LogTimeBottomSheetState extends State<LogTimeBottomSheet> {
                   controller: _hourController,
                   labelText: 'Hours',
                   textInputAction: TextInputAction.next,
+                  keyboardType: TextInputType.number,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'field can\'t be empty';

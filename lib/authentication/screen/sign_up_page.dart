@@ -24,7 +24,7 @@ class _SignUpPageState extends State<SignUpPage> {
       TextEditingController();
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
-  final TextEditingController _empIdController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     var sHeight = MediaQuery.of(context).size.height;
@@ -87,18 +87,6 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     CustomTextFormField(
                       validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'field can\'t be empty';
-                        }
-                        return null;
-                      },
-                      controller: _empIdController,
-                      labelText: 'EMP ID',
-                      obscureText: false,
-                      textInputAction: TextInputAction.next,
-                    ),
-                    CustomTextFormField(
-                      validator: (value) {
                         if (value!.isEmpty ||
                             !RegExp(r"^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$")
                                 .hasMatch(value)) {
@@ -147,40 +135,11 @@ class _SignUpPageState extends State<SignUpPage> {
               SizedBox(
                 height: sHeight * 0.04,
               ),
-              // StoreConnector<AppState, bool>(
-              //   converter: (store) =>
-              //       store.state.authState!.signUpSuccess ?? false,
-              //   builder: (context, signUpSuccess) {
-              //     // if (signUpSuccess) {
-              //     //   WidgetsBinding.instance.addPostFrameCallback((_) {
-              //     //     Navigator.of(context).push(MaterialPageRoute(
-              //     //       builder: (context) => const SignInPage(),
-              //     //     ));
-              //     //   });
-              //     // }
-              //     return CustomElevatedButton(
-              //       onPressed: () {
-              //         User user = User(
-              //           firstName: _firstNameController.text.trim(),
-              //           lastName: _lastNameController.text.trim(),
-              //           email: _emailController.text.trim(),
-              //           password: _passwordController.text.trim(),
-              //         );
-              //         store.dispatch(SignUpAction(user));
-              //       },
-              //       child: const Text(
-              //         'Sign Up',
-              //         style: TextStyle(fontSize: 16),
-              //       ),
-              //     );
-              //   },
-              // ),
-
               StoreBuilder<AppState>(
                 builder: (context, Store<AppState> store) {
                   if (store.state.authState!.signUpSuccess == true) {
                     WidgetsBinding.instance.addPostFrameCallback((_) {
-                      Navigator.of(context).push(MaterialPageRoute(
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (context) => const SignInPage()));
                       store.dispatch(MovedToNextPage());
                     });
@@ -191,40 +150,26 @@ class _SignUpPageState extends State<SignUpPage> {
                         User user = User(
                           firstName: _firstNameController.text.trim(),
                           lastName: _lastNameController.text.trim(),
-                          //  empid: int.parse(_empIdController.text.trim()),
                           email: _emailController.text.trim(),
                           password: _passwordController.text.trim(),
                         );
                         store.dispatch(SignUpAction(user));
                       },
-                      child: store.state.authState!.isFetching!
-                          ? const SizedBox(
-                              height: 25,
-                              width: 25,
-                              child: CircularProgressIndicator(
-                                  color: Colors.white),
-                            )
-                          : const Text(
-                              'Sign Up',
-                              style: TextStyle(fontSize: 16),
-                            ));
+                      child:
+                          // store.state.authState!.isFetching!
+                          //     ? const SizedBox(
+                          //         height: 25,
+                          //         width: 25,
+                          //         child: CircularProgressIndicator(
+                          //             color: Colors.white),
+                          //       )
+                          //     :
+                          const Text(
+                        'Sign Up',
+                        style: TextStyle(fontSize: 16),
+                      ));
                 },
               ),
-              // StoreConnector<AppState, bool>(
-              //   converter: (store) =>
-              //       store.state.authState!.signUpSuccess ?? false,
-              //   builder: (context, signUpSuccess) {
-              //     if (signUpSuccess) {
-              //       WidgetsBinding.instance.addPostFrameCallback((_) {
-              //         Navigator.of(context).push(MaterialPageRoute(
-              //           builder: (context) => const SignInPage(),
-              //         ));
-              //       });
-              //     }
-              //     return Container();
-              //   },
-              // ),
-
               SizedBox(
                 height: sHeight * 0.07,
               ),
