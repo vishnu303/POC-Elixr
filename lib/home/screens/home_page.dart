@@ -18,11 +18,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      StoreProvider.of<AppState>(context).dispatch(GetLogDataAction());
-    });
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    StoreProvider.of<AppState>(context).dispatch(GetLogDataAction());
   }
 
   @override
@@ -37,10 +35,10 @@ class _HomePageState extends State<HomePage> {
           actions: [
             TextButton(
                 onPressed: () {
-                  Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => SignInPage()));
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => const SignInPage()));
                 },
-                child: CustomText(
+                child: const CustomText(
                   text: 'Logout',
                   fontSize: 16,
                   textColor: Colors.white,

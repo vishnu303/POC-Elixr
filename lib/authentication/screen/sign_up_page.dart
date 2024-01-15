@@ -147,27 +147,27 @@ class _SignUpPageState extends State<SignUpPage> {
 
                   return CustomElevatedButton(
                       onPressed: () {
-                        User user = User(
-                          firstName: _firstNameController.text.trim(),
-                          lastName: _lastNameController.text.trim(),
-                          email: _emailController.text.trim(),
-                          password: _passwordController.text.trim(),
-                        );
-                        store.dispatch(SignUpAction(user));
+                        if (formKey.currentState!.validate()) {
+                          User user = User(
+                            firstName: _firstNameController.text.trim(),
+                            lastName: _lastNameController.text.trim(),
+                            email: _emailController.text.trim(),
+                            password: _passwordController.text.trim(),
+                          );
+                          store.dispatch(SignUpAction(user));
+                        }
                       },
-                      child:
-                          // store.state.authState!.isFetching!
-                          //     ? const SizedBox(
-                          //         height: 25,
-                          //         width: 25,
-                          //         child: CircularProgressIndicator(
-                          //             color: Colors.white),
-                          //       )
-                          //     :
-                          const Text(
-                        'Sign Up',
-                        style: TextStyle(fontSize: 16),
-                      ));
+                      child: store.state.authState!.isFetching!
+                          ? const SizedBox(
+                              height: 25,
+                              width: 25,
+                              child: CircularProgressIndicator(
+                                  color: Colors.white),
+                            )
+                          : const Text(
+                              'Sign Up',
+                              style: TextStyle(fontSize: 18),
+                            ));
                 },
               ),
               SizedBox(

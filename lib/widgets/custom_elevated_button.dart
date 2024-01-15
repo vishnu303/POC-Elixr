@@ -27,22 +27,27 @@ class CustomElevatedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-        foregroundColor: Colors.white,
-        backgroundColor: Theme.of(context).primaryColor,
-        disabledBackgroundColor: Colors.grey,
-        disabledForegroundColor: Colors.white,
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 140),
+    return SizedBox(
+      height: 60,
+      width: 250,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+          foregroundColor: Colors.white,
+          backgroundColor: Theme.of(context).primaryColor,
+          disabledBackgroundColor: Colors.grey,
+          disabledForegroundColor: Colors.white,
+          //padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 140),
+        ),
+        focusNode: focusNode,
+        statesController: statesController,
+        onLongPress: onLongPress,
+        onFocusChange: onFocusChange,
+        onHover: onHover,
+        child: child,
       ),
-      focusNode: focusNode,
-      statesController: statesController,
-      onLongPress: onLongPress,
-      onFocusChange: onFocusChange,
-      onHover: onHover,
-      child: child,
     );
   }
 }

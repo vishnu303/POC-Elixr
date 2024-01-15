@@ -25,9 +25,4 @@ class User {
         "email_id": email,
         "password": password,
       };
-
-  @override
-  String toString() {
-    return 'User{firstName: $firstName, lastName: $lastName, email: $email, password: $password}';
-  }
 }

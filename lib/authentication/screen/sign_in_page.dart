@@ -23,7 +23,7 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     var sHeight = MediaQuery.of(context).size.height;
-    var sWidth = MediaQuery.of(context).size.height;
+    var sWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
@@ -90,26 +90,26 @@ class _SignInPageState extends State<SignInPage> {
                     }
                     return CustomElevatedButton(
                       onPressed: () {
-                        store.dispatch(
-                          SignInAction(
-                            email: _emailController.text,
-                            password: _passwordController.text,
-                          ),
-                        );
+                        if (formKey.currentState!.validate()) {
+                          store.dispatch(
+                            SignInAction(
+                              email: _emailController.text,
+                              password: _passwordController.text,
+                            ),
+                          );
+                        }
                       },
-                      child:
-                          // store.state.authState!.isFetching!
-                          //     ? const SizedBox(
-                          //         height: 25,
-                          //         width: 25,
-                          //         child: CircularProgressIndicator(
-                          //             color: Colors.white),
-                          //       )
-                          //     :
-                          const Text(
-                        'Sign In',
-                        style: TextStyle(fontSize: 16),
-                      ),
+                      child: store.state.authState!.isFetching!
+                          ? const SizedBox(
+                              height: 25,
+                              width: 25,
+                              child: CircularProgressIndicator(
+                                  color: Colors.white),
+                            )
+                          : const Text(
+                              'Sign In',
+                              style: TextStyle(fontSize: 18),
+                            ),
                     );
                   },
                 ),

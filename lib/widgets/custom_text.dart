@@ -7,7 +7,6 @@ class CustomText extends StatelessWidget {
   final TextAlign? textAlign;
   final TextDirection? textDirection;
   final TextOverflow? overflow;
-  final double? textScaleFactor;
   final int? maxLines;
   final TextHeightBehavior? textHeightBehavior;
   final Color? selectionColor;
@@ -22,7 +21,6 @@ class CustomText extends StatelessWidget {
     this.textAlign,
     this.textDirection,
     this.overflow,
-    this.textScaleFactor,
     this.maxLines,
     this.textHeightBehavior,
     this.selectionColor,
@@ -40,7 +38,7 @@ class CustomText extends StatelessWidget {
       textHeightBehavior: textHeightBehavior,
       strutStyle: strutStyle,
       overflow: overflow,
-      textScaleFactor: textScaleFactor,
+      textScaler: TextScaler.noScaling,
       maxLines: maxLines,
       selectionColor: selectionColor,
       style: TextStyle(

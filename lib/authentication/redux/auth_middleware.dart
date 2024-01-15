@@ -9,6 +9,7 @@ import '../model/user_model.dart';
 
 Middleware<AppState> signUpMiddleWare() {
   return (Store<AppState> store, action, NextDispatcher next) async {
+    next(action);
     String errorMsg = '';
 
     if (action is SignUpAction) {
@@ -47,12 +48,12 @@ Middleware<AppState> signUpMiddleWare() {
         store.dispatch(SignUpFaliedAction(errorMsg: e.toString()));
       }
     }
-    next(action);
   };
 }
 
 Middleware<AppState> signInMiddleware() {
   return (Store<AppState> store, action, NextDispatcher next) async {
+    next(action);
     if (action is SignInAction) {
       try {
         User response = await ApiService.signIn(
@@ -67,6 +68,5 @@ Middleware<AppState> signInMiddleware() {
         store.dispatch(SignInFailedAction());
       }
     }
-    next(action);
   };
 }
